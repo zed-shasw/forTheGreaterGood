@@ -1,6 +1,9 @@
 // *************** https://leetcode.com/problems/combination-sum/ ******************
 
-// Here we implement the idea of pick and not pick, with repetation allowed unlimited number of times. 
+// Here we implement the idea of pick and not pick, with repetation allowed unlimited number of times.
+
+// Input: candidates = [2,3,5], target = 8
+// Output: [[2,2,2,2],[2,3,3],[3,5]]
 
 class Solution
 {
