@@ -7,33 +7,35 @@ Ques: Given an array of non-negative integers, and a value sum, determine if the
 arr = {2, 3, 7} ; sum = 5
 
        0 1 2 3 4 5
-{}     0 0 0 0 0 0
-{2}    0 0 1 0 0 0
-{3}    0 0 1 1 0 2
-{7}    0 0 1 1 0 2
+{}     1 0 0 0 0 0
+{2}    1 0 1 0 0 0
+{3}    1 0 1 1 0 1
+{7}    1 0 1 1 0 1
 
 */
 
-bool isSubsetSum(vector<int> arr, int sum)
+class Solution
 {
-    // code here
-    int n = arr.size();
-    vector<vector<int>> dp(n + 1, vector<int>(sum + 1, 0));
-    for (int i = 1; i <= n; i++)
+public:
+    bool isSubsetSum(vector<int> arr, int sum)
     {
-        for (int j = 1; j <= sum; j++)
+        // code here
+        int n = arr.size();
+        vector<vector<int>> dp(n + 1, vector<int>(sum + 1, 0));
+        dp[0][0] = 1;
+        for (int i = 1; i <= n; i++)
         {
-            int ind = j - arr[i - 1];  // check if it is possible to consider the element. 
-            if (ind >= 0)
+            for (int j = 0; j <= sum; j++)
             {
-                if (ind == 0 || dp[i - 1][ind])   // if adding element makes sense 
-                    dp[i][j] = 1 + dp[i - 1][ind];
-                else                              // else insert the value from last row  
+                int ind = j - arr[i - 1];
+                if (j == 0)
+                    dp[i][j] = 1;
+                if (ind >= 0)
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][ind];
+                else
                     dp[i][j] = dp[i - 1][j];
             }
-            else
-                dp[i][j] = dp[i - 1][j];
         }
+        return dp[n][sum];
     }
-    return dp[n][sum] > 0;
-}
+};
